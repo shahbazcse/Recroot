@@ -1,52 +1,46 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-function EventSummary({ setOpenModal }) {
-  const { students } = useSelector((state) => state.volunteers);
-
+function EventSummary({ allVolunteers, event }) {
+  const { name, description, location, date, roles } = event;
   return (
-    <div className="h-[72vh] overflow-auto drop-shadow-md">
-      <table className="w-[80%] text-left">
-        <thead className="sticky top-0 bg-blue-300">
-          <tr>
-            <th className="px-4 py-2 border-r border-b w-[8vh]">#</th>
-            <th className="px-4 py-2 border-r border-b">Name</th>
-            <th className="px-4 py-2 border-r border-b">Grade</th>
-            <th className="px-4 py-2 border-r border-b">Gender</th>
-            <th className="px-4 py-2 border-r border-b">Age</th>
-            <th className="px-4 py-2 border-r border-b">Attendance</th>
-            <th className="px-4 py-2 border-b">Marks</th>
-          </tr>
-        </thead>
-        <tbody className="bg-[#FFFFFF]">
-          {[].map((student, index) => (
-            <tr key={index}>
-              <td className="px-4 py-2 border-r border-b w-[8vh]">
-                #{index + 1}
-              </td>
-              <td className="px-4 py-2 border-r border-b font-bold">
-                <span
-                  onClick={() =>
-                    setOpenModal({
-                      showModal: true,
-                      data: student,
-                      formType: "StudentDetail",
-                    })
-                  }
-                  className="underline hover:cursor-pointer hover:text-blue-600"
-                >
-                  {student.name}
-                </span>
-              </td>
-              <td className="px-4 py-2 border-r border-b">{student.grade}</td>
-              <td className="px-4 py-2 border-r border-b">{student.gender}</td>
-              <td className="px-4 py-2 border-r border-b">{student.age}</td>
-              <td className="px-4 py-2 border-r border-b">{student.attendance}%</td>
-              <td className="px-4 py-2 border-b">{student.marks}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="bg-slate-200 flex flex-col gap-3 border px-12 py-8 rounded-lg">
+      <p className="font-bold text-3xl">{name}</p>
+      <p>
+        <span className="font-bold">Description:</span> {description}
+      </p>
+      <p>
+        <span className="font-bold">Location:</span> {location.venue}
+        {location.address.street},{location.address.city},{" "}
+        {location.address.state}, {location.address.country}
+      </p>
+      <p>
+        <span className="font-bold">Date:</span> {date.month} {date.day},{" "}
+        {date.year}
+      </p>
+      <p className="font-bold">Roles:</p>
+      <div className="flex flex-col gap-2 border border-slate-300 p-2 w-[28vh] rounded-lg text-sm">
+        {roles.map((r) => {
+          return (
+            <div className="p-2 border bg-slate-100 rounded-lg">
+              <p><span className="font-bold mr-1">Role:</span> {r.role}</p>
+              <p><span className="font-bold mr-1">Required Volunteers:</span> {r.requiredVolunteers}</p>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex flex-col gap-2">
+        <p className="font-bold">Registered Volunteers:</p>
+        <div className="flex flex-col gap-2 border border-slate-300 p-2 w-[28vh] rounded-lg text-sm">
+          {allVolunteers.map((v) => {
+            return (
+              <div className="p-2 border bg-slate-100 rounded-lg">
+                <p><span className="font-bold mr-1">Name:</span> {v.name}</p>
+                <p><span className="font-bold mr-1">Contact:</span> {v.contact}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,16 @@
 import React from "react";
 import VolunteerSummary from "../components/ListTable/VolunteerSummary";
+import { useSelector } from "react-redux";
 
-function School() {
+function VolunteerView() {
+  const { volunteers } = useSelector((state) => state.volunteers);
   return (
-    <div className="flex flex-wrap items-center justify-center gap-24 mt-14 mx-20">
-      <VolunteerSummary />
+    <div className="flex flex-col gap-8 mr-[24vh] my-4 pb-8">
+      {volunteers.map((volunteer) => {
+        return <VolunteerSummary volunteer={volunteer} />;
+      })}
     </div>
   );
 }
 
-export default School;
+export default VolunteerView;

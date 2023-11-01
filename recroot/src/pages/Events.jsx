@@ -1,7 +1,7 @@
 import React from "react";
 import EventList from "../components/ListTable/EventList";
 
-function Event({ setOpenModal }) {
+function Events({ setOpenModal }) {
   return (
     <div className="mt-4 ml-8">
       <EventList setOpenModal={setOpenModal} />
@@ -9,4 +9,4 @@ function Event({ setOpenModal }) {
   );
 }
 
-export default Event;
+export default Events;
