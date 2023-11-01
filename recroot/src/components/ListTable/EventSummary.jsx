@@ -9,7 +9,7 @@ function EventSummary({ allVolunteers, event }) {
         <span className="font-bold">Description:</span> {description}
       </p>
       <p>
-        <span className="font-bold">Location:</span> {location.venue}
+        <span className="font-bold">Location:</span> {location.venue},
         {location.address.street},{location.address.city},{" "}
         {location.address.state}, {location.address.country}
       </p>
