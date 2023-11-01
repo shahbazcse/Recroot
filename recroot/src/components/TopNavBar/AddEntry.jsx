@@ -10,7 +10,7 @@ function AddEntry({ setOpenModal }) {
           formType: "OptionsModal",
         })
       }
-      className="flex items-center justify-center gap-1 bg-blue-200 hover:bg-blue-300 px-7 py-4 font-bold text-lg drop-shadow-md cursor-pointer rounded-md"
+      className="flex items-center justify-center gap-1 bg-[#fd7790] hover:bg-[#f8516f] px-7 py-4 font-bold text-lg drop-shadow-md cursor-pointer rounded-md"
     >
       <span>Add Entry</span>
       <AiOutlinePlus className="h-5 w-5" />

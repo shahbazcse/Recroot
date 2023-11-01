@@ -7,7 +7,7 @@ function EventList({ setOpenModal }) {
   return (
     <div className="h-[80vh] overflow-auto drop-shadow-md">
       <table className="w-[80%] text-left">
-        <thead className="sticky top-0 bg-blue-300">
+        <thead className="sticky top-0 bg-[#fd7790]">
           <tr>
             <th className="px-4 py-2 border-r border-b w-[8vh]">#</th>
             <th className="px-4 py-2 border-r border-b">Name</th>
