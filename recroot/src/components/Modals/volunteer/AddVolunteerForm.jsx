@@ -75,8 +75,14 @@ function AddVolunteerForm({ openModal, setOpenModal }) {
   };
 
   const handleUpdateVolunteer = () => {
-    dispatch(addVolunteerAsync(editForm));
-    setOpenModal({ ...openModal, data: editForm, formType: "VolunteerDetail" });
+    if (editForm.events.length) {
+      dispatch(addVolunteerAsync(editForm));
+      setOpenModal({
+        ...openModal,
+        data: editForm,
+        formType: "VolunteerDetail",
+      });
+    }
   };
   return (
     <div className="flex flex-col gap-8 items-center justify-center">
@@ -184,7 +190,7 @@ function AddVolunteerForm({ openModal, setOpenModal }) {
               </div>
             ))
           ) : (
-            <div className="mx-auto text-center text-slate-500">
+            <div className="flex flex-col mx-auto gap-1 text-center text-slate-500">
               <p>No Events Registered</p>
               <p>Add Upcoming Event</p>
             </div>
@@ -214,10 +220,15 @@ function AddVolunteerForm({ openModal, setOpenModal }) {
       </div>
       <div
         onClick={handleUpdateVolunteer}
-        className="flex items-center justify-center gap-2 bg-green-300 hover:bg-green-400 w-36 py-4 mb-4 font-bold text-lg drop-shadow-md cursor-pointer rounded-md"
+        className="flex flex-col items-center justify-center"
       >
-        <span>Add</span>
-        <BiCheck className="h-6 w-6" />
+        <div className="flex items-center justify-center gap-2 bg-green-300 hover:bg-green-400 w-36 py-4 mb-4 font-bold text-lg drop-shadow-md cursor-pointer rounded-md">
+          <span>Add</span>
+          <BiCheck className="h-6 w-6" />
+        </div>
+        {editForm.events.length === 0 && (
+          <div className="text-red-500">Add Atleast One Event</div>
+        )}
       </div>
     </div>
   );
