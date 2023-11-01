@@ -2,20 +2,43 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateEventAsync } from "../../../features/events/eventsSlice";
 import { GrUpdate } from "react-icons/gr";
+import { TiDeleteOutline } from "react-icons/ti";
 
 function EditEventForm({ openModal, setOpenModal }) {
   const dispatch = useDispatch();
   const [editForm, setEditForm] = useState(openModal.data);
+  const [addRole, setAddRole] = useState({
+    role: "",
+    requiredVolunteers: 1,
+  });
+
+  const handleAddRole = () => {
+    setEditForm({
+      ...editForm,
+      roles: [...editForm.roles, addRole],
+    });
+    setAddRole({
+      role: "",
+      requiredVolunteers: 1,
+    });
+  };
+
+  const handleRemoveRole = (role) => {
+    setEditForm({
+      ...editForm,
+      roles: editForm.roles.filter((r) => r.role !== role),
+    });
+  };
 
   const handleUpdateEvent = () => {
-    // dispatch(
-    //   updateEventAsync({ id: editForm._id, updatedEvent: editForm })
-    // );
+    dispatch(
+      updateEventAsync({ id: editForm._id, updatedEvent: editForm })
+    );
     setOpenModal({ ...openModal, data: editForm, formType: "EventDetail" });
   };
   return (
     <div className="flex flex-col gap-8 items-center justify-center">
-      <div className="flex flex-col gap-6 text-lg items-center justify-center">
+      <div className="flex flex-col gap-6 items-center justify-center">
         <input
           placeholder="Event Name"
           value={editForm.name}
@@ -171,6 +194,48 @@ function EditEventForm({ openModal, setOpenModal }) {
             min={2000}
             max={2050}
           />
+        </div>
+        <div className="flex gap-2">
+          <input
+            value={addRole.role}
+            onChange={(e) => setAddRole({ ...addRole, role: e.target.value })}
+            className="w-40 ml-1 px-2 py-1 rounded-lg border border-black"
+            placeholder="Role Name"
+            type="text"
+          />
+          <input
+            value={addRole.requiredVolunteers}
+            onChange={(e) =>
+              setAddRole({
+                ...addRole,
+                requiredVolunteers: Number(e.target.value),
+              })
+            }
+            className="w-40 ml-1 px-2 py-1 rounded-lg border border-black"
+            type="number"
+          />
+          <button
+            onClick={handleAddRole}
+            className="bg-gray-200 hover:bg-gray-300 px-2 drop-shadow-sm cursor-pointer rounded-md"
+          >
+            Add
+          </button>
+        </div>
+        <div className="flex flex-col gap-2 border p-2 rounded-lg w-[36vh] text-sm max-h-[16vh] overflow-auto">
+          {!editForm.roles.length && <p className="text-slate-500 mx-auto">No Roles Added</p>}
+          {editForm.roles.map((r) => {
+            return (
+              <div className="flex items-center justify-center gap-1">
+                <div className="p-2 border bg-slate-100 rounded-lg">
+                  <p>Role: {r.role}</p>
+                  <p>Required Volunteers: {r.requiredVolunteers}</p>
+                </div>
+                <span onClick={() => handleRemoveRole(r.role)}>
+                  <TiDeleteOutline className="h-6 w-6 hover:text-red-600 cursor-pointer" />
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="flex gap-8 mb-4">

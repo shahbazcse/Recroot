@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTeacherAsync } from "../../../features/events/eventsSlice";
+import { addEventAsync } from "../../../features/events/eventsSlice";
 import { BiCheck } from "react-icons/bi";
+import { TiDeleteOutline } from "react-icons/ti";
 
 function AddEventForm({ openModal, setOpenModal }) {
   const dispatch = useDispatch();
-  const [teacherForm, setTeacherForm] = useState({
+  const [editForm, setEditForm] = useState({
     name: "",
     description: "",
     location: {
@@ -22,59 +23,135 @@ function AddEventForm({ openModal, setOpenModal }) {
       month: "January",
       year: 2000,
     },
-    roles: [
-      {
-        role: "",
-        requiredVolunteers: 0,
-      },
-    ],
+    roles: [],
   });
-  const handleAddTeacher = () => {
-    // dispatch(addTeacherAsync(teacherForm));
-    setOpenModal({ ...openModal, showModal: false });
+  const [addRole, setAddRole] = useState({
+    role: "",
+    requiredVolunteers: 1,
+  });
+
+  const handleAddRole = () => {
+    setEditForm({
+      ...editForm,
+      roles: [...editForm.roles, addRole],
+    });
+    setAddRole({
+      role: "",
+      requiredVolunteers: 1,
+    });
+  };
+
+  const handleRemoveRole = (role) => {
+    setEditForm({
+      ...editForm,
+      roles: editForm.roles.filter((r) => r.role !== role),
+    });
+  };
+
+  const handleUpdateEvent = () => {
+    console.log(editForm);
+    dispatch(addEventAsync(editForm));
+    setOpenModal({ ...openModal, data: editForm, formType: "EventDetail" });
   };
   return (
     <div className="flex flex-col gap-8 items-center justify-center">
-      <div className="flex flex-col gap-6 text-lg items-center justify-center">
+      <div className="flex flex-col gap-6 items-center justify-center">
         <input
           placeholder="Event Name"
-          value={teacherForm.name}
-          onChange={(e) =>
-            setTeacherForm({ ...teacherForm, name: e.target.value })
-          }
+          value={editForm.name}
+          onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
           className="px-2 w-full py-1 border-slate-600 border rounded-md"
           type="text"
         />
         <textarea
           placeholder="Event Description"
-          value={teacherForm.name}
+          value={editForm.description}
           onChange={(e) =>
-            setTeacherForm({ ...teacherForm, name: e.target.value })
+            setEditForm({ ...editForm, description: e.target.value })
           }
           className="text-sm w-full h-20 px-2 py-1 border-slate-600 border rounded-md"
         />
         <div className="flex flex-col gap-2 border p-2 rounded-lg">
           <input
+            value={editForm.location.venue}
+            onChange={(e) =>
+              setEditForm({
+                ...editForm,
+                location: { ...editForm.location, venue: e.target.value },
+              })
+            }
             placeholder="Event Venue"
             className="px-2 py-1 border-slate-600 border rounded-md"
             type="text"
           />
           <input
+            value={editForm.location.address.street}
+            onChange={(e) =>
+              setEditForm({
+                ...editForm,
+                location: {
+                  ...editForm.location,
+                  address: {
+                    ...editForm.location.address,
+                    street: e.target.value,
+                  },
+                },
+              })
+            }
             placeholder="Street"
             className="px-2 py-1 border-slate-600 border rounded-md"
             type="text"
           />
           <input
+            value={editForm.location.address.city}
+            onChange={(e) =>
+              setEditForm({
+                ...editForm,
+                location: {
+                  ...editForm.location,
+                  address: {
+                    ...editForm.location.address,
+                    city: e.target.value,
+                  },
+                },
+              })
+            }
             placeholder="City"
             className="px-2 py-1 border-slate-600 border rounded-md"
             type="text"
           />
           <input
+            value={editForm.location.address.state}
+            onChange={(e) =>
+              setEditForm({
+                ...editForm,
+                location: {
+                  ...editForm.location,
+                  address: {
+                    ...editForm.location.address,
+                    state: e.target.value,
+                  },
+                },
+              })
+            }
             placeholder="State"
             className="px-2 py-1 border-slate-600 border rounded-md"
             type="text"
           />
           <input
+            value={editForm.location.address.country}
+            onChange={(e) =>
+              setEditForm({
+                ...editForm,
+                location: {
+                  ...editForm.location,
+                  address: {
+                    ...editForm.location.address,
+                    country: e.target.value,
+                  },
+                },
+              })
+            }
             placeholder="Country"
             className="px-2 py-1 border-slate-600 border rounded-md"
             type="text"
@@ -82,11 +159,11 @@ function AddEventForm({ openModal, setOpenModal }) {
         </div>
         <div className="flex gap-4">
           <input
-            value={teacherForm.contact}
+            value={editForm.date.day}
             onChange={(e) =>
-              setTeacherForm({
-                ...teacherForm,
-                contact: Number(e.target.value),
+              setEditForm({
+                ...editForm,
+                date: { ...editForm.date, day: Number(e.target.value) },
               })
             }
             className="w-20 px-2 py-1 border-slate-600 border rounded-md"
@@ -96,11 +173,11 @@ function AddEventForm({ openModal, setOpenModal }) {
             max={31}
           />
           <select
-            value={teacherForm.contact}
+            value={editForm.date.month}
             onChange={(e) =>
-              setTeacherForm({
-                ...teacherForm,
-                contact: Number(e.target.value),
+              setEditForm({
+                ...editForm,
+                date: { ...editForm.date, month: e.target.value },
               })
             }
             className="w-23 px-2 py-1 border-slate-600 border rounded-md"
@@ -121,11 +198,11 @@ function AddEventForm({ openModal, setOpenModal }) {
             <option value="December">December</option>
           </select>
           <input
-            value={teacherForm.contact}
+            value={editForm.date.year}
             onChange={(e) =>
-              setTeacherForm({
-                ...teacherForm,
-                contact: Number(e.target.value),
+              setEditForm({
+                ...editForm,
+                date: { ...editForm.date, year: Number(e.target.value) },
               })
             }
             className="w-24 px-2 py-1 border-slate-600 border rounded-md"
@@ -135,13 +212,59 @@ function AddEventForm({ openModal, setOpenModal }) {
             max={2050}
           />
         </div>
+        <div className="flex gap-2">
+          <input
+            value={addRole.role}
+            onChange={(e) => setAddRole({ ...addRole, role: e.target.value })}
+            className="w-40 ml-1 px-2 py-1 rounded-lg border border-black"
+            placeholder="Role Name"
+            type="text"
+          />
+          <input
+            value={addRole.requiredVolunteers}
+            onChange={(e) =>
+              setAddRole({
+                ...addRole,
+                requiredVolunteers: Number(e.target.value),
+              })
+            }
+            className="w-40 ml-1 px-2 py-1 rounded-lg border border-black"
+            type="number"
+          />
+          <button
+            onClick={handleAddRole}
+            className="bg-gray-200 hover:bg-gray-300 px-2 drop-shadow-sm cursor-pointer rounded-md"
+          >
+            Add
+          </button>
+        </div>
+        <div className="flex flex-col gap-2 border p-2 rounded-lg w-[36vh] text-sm max-h-[16vh] overflow-auto">
+          {!editForm.roles.length && (
+            <p className="text-slate-500 mx-auto">No Roles Added</p>
+          )}
+          {editForm.roles.map((r) => {
+            return (
+              <div className="flex items-center justify-center gap-1">
+                <div className="p-2 border bg-slate-100 rounded-lg">
+                  <p>Role: {r.role}</p>
+                  <p>Required Volunteers: {r.requiredVolunteers}</p>
+                </div>
+                <span onClick={() => handleRemoveRole(r.role)}>
+                  <TiDeleteOutline className="h-6 w-6 hover:text-red-600 cursor-pointer" />
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div
-        onClick={handleAddTeacher}
-        className="flex items-center justify-center gap-2 bg-green-300 hover:bg-green-400 w-36 py-4 mb-4 font-bold text-lg drop-shadow-md cursor-pointer rounded-md"
-      >
-        <span>Add</span>
-        <BiCheck className="h-6 w-6" />
+      <div className="flex gap-8 mb-4">
+        <div
+          onClick={handleUpdateEvent}
+          className="flex items-center justify-center gap-2 bg-green-300 hover:bg-green-400 w-32 py-4 font-bold text-lg drop-shadow-md cursor-pointer rounded-md"
+        >
+          <BiCheck />
+          <span>Add</span>
+        </div>
       </div>
     </div>
   );

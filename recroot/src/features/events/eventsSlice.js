@@ -12,7 +12,7 @@ export const addEventAsync = createAsyncThunk(
   "events/addEventAsync",
   async (newEvent) => {
     const response = await axios.post(API, newEvent);
-    return response.data;
+    return response.data.event;
   }
 );
 

@@ -9,7 +9,7 @@ function EventDetail({ openModal, setOpenModal }) {
   const { _id, name, description, location, date, roles } = openModal.data;
 
   const handleDeleteEvent = () => {
-    // dispatch(deleteEventAsync(_id));
+    dispatch(deleteEventAsync(_id));
     setOpenModal({ ...openModal, showModal: false });
   };
 
