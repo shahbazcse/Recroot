@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteVolunteerAsync } from "../../../features/volunteers/volunteersSlice";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -9,8 +9,14 @@ function VolunteerDetail({ openModal, setOpenModal }) {
   const { _id, name, contact, isAvailable, skills, interests, events } =
     openModal.data;
 
+  const { events: allEvents } = useSelector((state) => state.events);
+
+  const getEventName = (id) => {
+    return allEvents.find(({ _id }) => _id === id).name;
+  };
+
   const handleDeleteVolunteer = () => {
-    // dispatch(deleteVolunteerAsync(_id));
+    dispatch(deleteVolunteerAsync(_id));
     setOpenModal({ ...openModal, showModal: false });
   };
 
@@ -60,7 +66,7 @@ function VolunteerDetail({ openModal, setOpenModal }) {
           {events.length ? (
             events.map((e) => (
               <span className="border rounded-full p-1 bg-slate-200 m-1">
-                {e.name}
+                {getEventName(e)}
               </span>
             ))
           ) : (

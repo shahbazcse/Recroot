@@ -26,10 +26,13 @@ function App() {
     formType: null,
   });
 
+  const { volunteers } = useSelector((state) => state.volunteers);
+  const { events } = useSelector((state) => state.events);
+
   useEffect(() => {
     dispatch(fetchVolunteers());
     dispatch(fetchEvents());
-  }, []);
+  }, [dispatch, volunteers, events]);
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
