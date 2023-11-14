@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 function VolunteerSummary({ volunteer }) {
   const { events: allEvents } = useSelector((state) => state.events);
   const { name, contact, isAvailable, events } = volunteer;
-
   const getEventDetails = (eId) => {
     return allEvents.find(({ _id }) => _id === eId);
   };
@@ -33,13 +32,17 @@ function VolunteerSummary({ volunteer }) {
           const event = getEventDetails(eId);
           return (
             <div className="p-2 border bg-slate-100 rounded-lg">
-              <p><span className="font-bold mr-1">Event:</span> {event.name}</p>
               <p>
-                <span className="font-bold mr-1">Date:</span> {event.date.month} {event.date.day}, {event.date.year}
+                <span className="font-bold mr-1">Event:</span> {event?.name}
               </p>
               <p>
-                <span className="font-bold mr-1">Location:</span> {event.location.venue}, {event.location.address.city},{" "}
-                {event.location.address.country}
+                <span className="font-bold mr-1">Date:</span> {event?.date.month}{" "}
+                {event?.date.day}, {event?.date.year}
+              </p>
+              <p>
+                <span className="font-bold mr-1">Location:</span>{" "}
+                {event?.location.venue}, {event?.location.address.city},{" "}
+                {event?.location.address.country}
               </p>
             </div>
           );

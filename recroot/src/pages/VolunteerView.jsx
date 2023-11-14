@@ -6,9 +6,9 @@ function VolunteerView() {
   const { volunteers } = useSelector((state) => state.volunteers);
   return (
     <div className="flex flex-col gap-8 mr-[24vh] my-4 pb-8">
-      {volunteers.map((volunteer) => {
-        return <VolunteerSummary volunteer={volunteer} />;
-      })}
+      {volunteers.map((volunteer) => (
+        <VolunteerSummary volunteer={volunteer} />
+      ))}
     </div>
   );
 }
