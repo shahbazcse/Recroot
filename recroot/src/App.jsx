@@ -11,6 +11,7 @@ import Events from "./pages/Events";
 import Volunteers from "./pages/Volunteers";
 import EventView from "./pages/EventView";
 import VolunteerView from "./pages/VolunteerView";
+import NonDesktopPage from './pages/NonDesktopPage';
 
 import Modal from "./components/Modals/Modal";
 
@@ -35,7 +36,11 @@ function App() {
   }, [dispatch, volunteers, events]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <>
+    <div className="block xl:hidden h-screen">
+        <NonDesktopPage />
+      </div>
+    <div className="hidden xl:flex flex-col justify-center items-center h-screen">
       <TopNavBar setOpenModal={setOpenModal} />
       <div className="flex h-[90%] w-full">
         <div className="w-[30%] ml-8">
@@ -67,6 +72,7 @@ function App() {
         )}
       </div>
     </div>
+    </>
   );
 }
 
