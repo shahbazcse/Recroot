@@ -3,8 +3,8 @@ import { IoIosDesktop } from "react-icons/io";
 
 const NonDesktopPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="max-w-md mx-4 p-8 bg-gradient-to-bl from-gray-700 via-gray-900 to-black shadow-lg shadow-blue-500/40 rounded-lg text-white">
+    <div className="h-screen flex items-center justify-center bg-black">
+      <div className="max-w-md mx-4 p-8 bg-[#0F0F0F] shadow-[1px_1px_20px_0px_#2d3748] rounded-lg text-white">
         <IoIosDesktop className="h-10 w-10 bg-transparent mb-4 flex mx-auto" />
         <h1 className="text-2xl font-bold mb-4 font-[roboto]">
           Switch to Desktop Mode
