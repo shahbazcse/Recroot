@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = `${process.env.BACKEND_API}/volunteers`;
+const API = `https://recroot-backend.vercel.app/volunteers`;
 
 export const fetchVolunteers = createAsyncThunk(
   "volunteers/fetchVolunteers",

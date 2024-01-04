@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = `${process.env.BACKEND_API}/events`;
+const API = `https://recroot-backend.vercel.app/events`;
 
 export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
   const response = await axios.get(API);
@@ -58,6 +58,7 @@ export const eventsSlice = createSlice({
     [fetchEvents.rejected]: (state, action) => {
       state.status = "error";
       console.log(action.error.message);
+      console.log(process.env.BACKEND_API);
       state.error = action.error.message;
     },
     [addEventAsync.pending]: (state) => {
