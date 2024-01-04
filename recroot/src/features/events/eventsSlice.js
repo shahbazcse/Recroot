@@ -58,7 +58,6 @@ export const eventsSlice = createSlice({
     [fetchEvents.rejected]: (state, action) => {
       state.status = "error";
       console.log(action.error.message);
-      console.log(process.env.BACKEND_API);
       state.error = action.error.message;
     },
     [addEventAsync.pending]: (state) => {
