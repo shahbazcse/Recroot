@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = "https://recrootbackend.shahbazahmad12.repl.co/events";
+const API = "https://e0c57fcd-4937-4bea-ab9d-4335fb0c1eb2-00-2zhjwq1hhy4it.worf.replit.dev/events";
 
 export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
   const response = await axios.get(API);
