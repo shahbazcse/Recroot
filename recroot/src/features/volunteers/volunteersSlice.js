@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = "https://e0c57fcd-4937-4bea-ab9d-4335fb0c1eb2-00-2zhjwq1hhy4it.worf.replit.dev/volunteers";
+const API = `${process.env.BACKEND_API}/volunteers`;
 
 export const fetchVolunteers = createAsyncThunk(
   "volunteers/fetchVolunteers",
